@@ -8,8 +8,8 @@ Tecnología de Desarrollos de Sistemas Informáticos
 👨‍🏫 Profesor: Mag. Carlos Adolfo Beltrán Castro  
 👨‍💻 Estudiantes: Sebastian David Ortiz Gomez - 1095580428
 
-![Captura de pantalla]
-Imagen de Pantalla Inicial con Menú del Proyecto
+<img width="729" height="540" alt="{CAF8BC9B-A8CD-40DA-B677-151956EEA34A}" src="https://github.com/user-attachments/assets/e5979c8a-8770-4623-a8ee-ebbb9767b9f8" />
+
 
 ## 🚀 Descripción del Proyecto
 Este sistema de escritorio desarrollado en **Java SE** y **Swing** surge como solución tecnológica para la cadena de supermercados en expansión **"El Ahorro"**. El proyecto resuelve problemáticas críticas de control operacional como:
