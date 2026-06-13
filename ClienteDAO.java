@@ -1,3 +1,9 @@
+package com.elahorro.modelo;
+
+/**
+ *
+ * @author famil
+ */
 import com.elahorro.conexion.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,45 +15,61 @@ import java.util.List;
 public class ClienteDAO {
 
     public boolean registrarCliente(Cliente cliente) {
-        String sql = "INSERT INTO cliente (documento, nombre, email) VALUES (?, ?, ?)";
+    String sql = "INSERT INTO cliente (documento, nombre, email) VALUES (?, ?, ?)";
+    
+    Connection cn = Conexion.conectar();
+    
+    try {
+        PreparedStatement ps = cn.prepareStatement(sql);
         
-        try (Connection cn = Conexion.conectar();
-             PreparedStatement ps = cn.prepareStatement(sql)) {
-            
-            ps.setString(1, cliente.getDocumento());
-            ps.setString(2, cliente.getNombre());
-            ps.setString(3, cliente.getEmail());
-            
-            int filasAfectadas = ps.executeUpdate();
-            return filasAfectadas > 0;
-            
+        ps.setString(1, cliente.getDocumento()); 
+        ps.setString(2, cliente.getNombre());   
+        ps.setString(3, cliente.getEmail());  
+        
+        ps.executeUpdate();
+        return true;
+        
+    } catch (SQLException e) {
+        System.out.println("Error al registrar cliente: " + e.getMessage());
+        return false;
+    } finally {
+        try {
+            if (cn != null) cn.close();
         } catch (SQLException e) {
-            System.out.println("Error al registrar cliente: " + e.getMessage());
-            return false;
         }
     }
+    }
 
-    public List<Cliente> listarClientes() {
-        List<Cliente> lista = new ArrayList<>();
-        String sql = "SELECT id_cliente, documento, nombre, email FROM cliente ORDER BY id_cliente DESC";
+    public java.util.List<com.elahorro.modelo.Cliente> listarClientes() {
+    java.util.List<com.elahorro.modelo.Cliente> lista = new java.util.ArrayList<>();
+    
+    String sql = "SELECT id_cliente, documento, nombre, email, puntos_acumulados FROM cliente";
+    
+    Connection cn = Conexion.conectar();
+    
+    try {
+        PreparedStatement ps = cn.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
         
-        try (Connection cn = Conexion.conectar();
-             PreparedStatement ps = cn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            com.elahorro.modelo.Cliente c = new com.elahorro.modelo.Cliente();
+            c.setIdCliente(rs.getInt("id_cliente"));
+            c.setDocumento(rs.getString("documento"));
+            c.setNombre(rs.getString("nombre")); 
+            c.setEmail(rs.getString("email")); 
+            c.setPuntosAcumulados(rs.getInt("puntos_acumulados"));
             
-            while (rs.next()) {
-                Cliente cli = new Cliente();
-                cli.setIdCliente(rs.getInt("id_cliente"));
-                cli.setDocumento(rs.getString("documento"));
-                cli.setNombre(rs.getString("nombre"));
-                cli.setEmail(rs.getString("email"));
-                lista.add(cli);
-            }
-            
-        } catch (SQLException e) {
-            System.out.println("Error al listar clientes: " + e.getMessage());
+            lista.add(c);
         }
-        return lista;
+    } catch (SQLException e) {
+        System.out.println("Error al listar clientes: " + e.getMessage());
+    } finally {
+        try {
+            if (cn != null) cn.close();
+        } catch (SQLException e) {
+        }
+    }
+    return lista;
     }
 
     public boolean actualizarCliente(Cliente cliente) {
