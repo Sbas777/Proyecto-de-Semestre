@@ -1,0 +1,77 @@
+package com.elahorro.modelo;
+
+
+import com.elahorro.conexion.Conexion;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProductoDAO {
+
+    public boolean registrarProducto(Producto prod) {
+        String sql = "INSERT INTO producto (nombre, precio_actual, stock_actual, id_categoria) VALUES (?, ?, ?, ?)";
+        try (Connection cn = Conexion.conectar(); 
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, prod.getNombre());
+            ps.setDouble(2, prod.getPrecioActual());
+            ps.setInt(3, prod.getStockActual());
+            ps.setInt(4, prod.getIdCategoria());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al registrar producto: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public List<Producto> listarProductos() {
+        List<Producto> lista = new ArrayList<>();
+        String sql = "SELECT id_producto, nombre, precio_actual, stock_actual, id_categoria FROM producto ORDER BY nombre ASC";
+        try (Connection cn = Conexion.conectar(); 
+             PreparedStatement ps = cn.prepareStatement(sql); 
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Producto p = new Producto();
+                p.setIdProducto(rs.getInt("id_producto"));
+                p.setNombre(rs.getString("nombre"));
+                p.setPrecioActual(rs.getDouble("precio_actual"));
+                p.setStockActual(rs.getInt("stock_actual"));
+                p.setIdCategoria(rs.getInt("id_categoria"));
+                lista.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al listar productos: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    public boolean actualizarProducto(Producto prod) {
+        String sql = "UPDATE producto SET nombre=?, precio_actual=?, stock_actual=?, id_categoria=? WHERE id_producto=?";
+        try (Connection cn = Conexion.conectar(); 
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setString(1, prod.getNombre());
+            ps.setDouble(2, prod.getPrecioActual());
+            ps.setInt(3, prod.getStockActual());
+            ps.setInt(4, prod.getIdCategoria());
+            ps.setInt(5, prod.getIdProducto());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar producto: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean eliminarProducto(int id) {
+        String sql = "DELETE FROM producto WHERE id_producto=?";
+        try (Connection cn = Conexion.conectar(); 
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar producto: " + e.getMessage());
+            return false;
+        }
+    }
+}
