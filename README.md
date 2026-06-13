@@ -47,3 +47,18 @@ El sistema está diseñado bajo el paradigma de Programación Orientada a Objeto
 * **Control Transaccional de Ventas:** Procesamiento seguro de facturas (Cabecera y Detalle) utilizando transacciones SQL controladas (`commit` y `rollback`). Esto garantiza que si una venta falla, el sistema no deje datos corruptos ni descuadre el inventario.
 * **Gestión de Inventario Dinámico (Descuento de Stock):** Automatización del inventario donde cada artículo vendido se resta automáticamente de las existencias físicas (`stock_actual`) en la tabla de productos de PostgreSQL tras confirmarse la compra.
 * **Seguridad en Conexiones:** Cierre de recursos y canales de comunicación (`Connection`, `PreparedStatement`) mediante bloques `finally`, evitando fugas de memoria y saturación del servidor de base de datos.
+
+## 📸 Evidencias del Sistema
+Registro de Clientes (CRUD)
+<img width="705" height="498" alt="{10488DF6-889F-4D53-913B-7B903C517E0D}" src="https://github.com/user-attachments/assets/1a6cfed1-b976-4d81-93f8-7ae50c6f7f24" />
+Gestión de Inventario (Productos)
+<img width="730" height="478" alt="{19C68D3E-3C14-4548-B9CA-D27A90BA3BB7}" src="https://github.com/user-attachments/assets/68c4ff8d-ca78-4715-8e3e-187156a12a3c" />
+Módulo Transaccional (Caja de Ventas)
+<img width="757" height="537" alt="{5AC1BD7B-B0BC-4FCC-B031-A7D5623E5836}" src="https://github.com/user-attachments/assets/70d6004c-3da6-4f9d-9f2f-90d9da9dde63" />
+Base De Datos
+<img width="960" height="581" alt="{A79615F8-9ACF-4B74-B8C5-BD19F6214194}" src="https://github.com/user-attachments/assets/e7d77a71-504e-43e2-939f-f5ba381b37ef" />
+Otros
+<img width="415" height="450" alt="{17324282-7578-44A7-9EE9-6A5F8FA55840}" src="https://github.com/user-attachments/assets/248aa558-2dc7-4f61-a578-7deb3cf9cb2e" />
+<img width="535" height="115" alt="{F2C0929D-3248-4EFC-9D95-CEE6208A3ED2}" src="https://github.com/user-attachments/assets/29222c33-8855-4b64-8c57-ba126afb1aa1" />
+
+
